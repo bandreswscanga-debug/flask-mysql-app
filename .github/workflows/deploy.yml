@@ -33,16 +33,19 @@ jobs:
       - name: Checkout del codigo
         uses: actions/checkout@v4
 
-      - name: Ejecutar Bandit (SAST Python)
-        uses: PyCQA/bandit@master
+      - name: Configurar Python
+        uses: actions/setup-python@v5
         with:
-          path: "."
-          options: "-r -f json -o bandit-report.json"
+          python-version: "3.12"
 
-      - name: Verificar resultados Bandit
+      - name: Instalar Bandit (SAST)
+        run: pip install bandit
+
+      - name: Ejecutar Bandit (SAST Python)
         run: |
           bandit -r . -f json -o bandit-report.json || true
-          bandit -r . -l  # Falla si hay hallazgos de severidad alta o critica
+          echo "=== Resultado Bandit (falla en severidad alta/critica) ==="
+          bandit -r . -lll
 
       - name: Instalar Trivy
         run: |
