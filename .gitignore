@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+*.md
+bandit-report.json
+.nginx/
+nginx/data/
+nginx/letsencrypt/
+dozzle/data/
+*.log
+.pytest_cache/
+.coverage
+htmlcov/

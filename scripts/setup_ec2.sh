@@ -5,6 +5,12 @@ echo "============================================="
 echo " SRE PROJECT - SETUP AUTOMÁTICO EN EC2"
 echo "============================================="
 
+# 0. Copiar .env de ejemplo si no existe
+if [ ! -f /opt/proyecto-sre/.env ]; then
+  cp /opt/proyecto-sre/.env.example /opt/proyecto-sre/.env
+  echo "[0/8] Se creó .env a partir de .env.example (edítalo si es necesario)"
+fi
+
 # 1. Ampliar filesystem si el volumen se aumentó en consola AWS
 echo "[1/8] Verificando y ampliando filesystem..."
 if lsblk /dev/nvme0n1 | grep -q "20G" || lsblk /dev/nvme0n1 | grep -q "30G" || lsblk /dev/nvme0n1 | grep -q "50G"; then
