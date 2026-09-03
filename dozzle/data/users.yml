@@ -1,0 +1,5 @@
+users:
+  ProfeChristian:
+    email: "profe@example.com"
+    name: "Profe Christian"
+    password: "$2b$11$UKduypjQu2IQUqlTir93tuCDfJosxaHN6KouR1c3oQ0o1vum7hsIe"
