@@ -127,11 +127,12 @@ def construir(pdf_path):
 
     E.append(Paragraph("Accesos a Producción", H2))
     E.append(tabla_datos([
-        ("API (Producción)", "https://api.&lt;MI-DOMINIO&gt;.duckdns.org"),
-        ("Portal de Logs (Dozzle)", "https://logs.&lt;MI-DOMINIO&gt;.duckdns.org"),
+        ("Repositorio (GitHub)", "https://github.com/bandreswscanga-debug/flask-mysql-app"),
+        ("API (Producción)", "https://api.oswal-sre.duckdns.org"),
+        ("Portal de Logs (Dozzle)", "https://logs.oswal-sre.duckdns.org"),
         ("Usuario Dozzle", "ProfeChristian"),
         ("Contraseña Dozzle", "Evidencia2"),
-        ("Uptime Kuma", "http://&lt;IP-EC2&gt;:3001"),
+        ("Uptime Kuma", "http://18.118.206.166:3001"),
     ]))
     E.append(Spacer(1, 0.8 * cm))
 
