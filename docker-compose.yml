@@ -1,0 +1,88 @@
+version: "3.8"
+
+services:
+  servidor-api:
+    build: .
+    container_name: servidor-api-ejemplo
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=servidor-bd-ejemplo
+      - DB_USER=usuario_ejemplo
+      - DB_PASS=contraseña_ejemplo
+      - DB_NAME=base_ejemplo
+    depends_on:
+      servidor-bd:
+        condition: service_healthy
+    networks:
+      - red-internal
+
+  servidor-bd:
+    image: mysql:8.0
+    container_name: servidor-bd-ejemplo
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_segura
+      MYSQL_DATABASE: base_ejemplo
+      MYSQL_USER: usuario_ejemplo
+      MYSQL_PASSWORD: contraseña_ejemplo
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - red-internal
+
+  nginx-proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    volumes:
+      - ./nginx/data:/data
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - red-internal
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma_data:/app/data
+    networks:
+      - red-internal
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DOZZLE_AUTH_PROVIDER=simple
+      - DOZZLE_USERNAME=ProfeChristian
+      - DOZZLE_PASSWORD=Evidencia2
+    networks:
+      - red-internal
+
+volumes:
+  mysql_data:
+  uptime-kuma_data:
+
+networks:
+  red-internal:
+    driver: bridge
