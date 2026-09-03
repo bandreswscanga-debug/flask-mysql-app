@@ -6,8 +6,10 @@ app = Flask(__name__)
 
 DB_HOST = os.environ.get("DB_HOST", "servidor-bd-ejemplo")
 DB_USER = os.environ.get("DB_USER", "usuario_ejemplo")
-DB_PASS = os.environ.get("DB_PASS", "contraseña_ejemplo")
+DB_PASS = os.environ.get("DB_PASS", "password_super_secreta_12345")
 DB_NAME = os.environ.get("DB_NAME", "base_ejemplo")
+
+HARDCODED_SECRETO = "clave_secreta_del_servidor_2530"
 
 
 def get_db_connection():
@@ -49,5 +51,4 @@ def get_data():
 
 
 if __name__ == "__main__":
-    # nosec B104 - needed for container/bridge networking
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=True)
