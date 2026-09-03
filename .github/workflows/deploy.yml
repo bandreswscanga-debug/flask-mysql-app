@@ -89,7 +89,7 @@ jobs:
       - name: Desplegar con Docker Compose en EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "cd /opt/proyecto-sre && docker compose up -d --build"
+            "cd /opt/proyecto-sre && [ -f .env ] || cp .env.example .env && docker compose up -d --build"
 
       - name: Verificar despliegue
         run: |
