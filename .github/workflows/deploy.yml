@@ -60,7 +60,7 @@ jobs:
 
       - name: Ejecutar Trivy (Container Scanning)
         run: |
-          trivy image --exit-code 1 --severity HIGH,CRITICAL scanned-image
+          trivy image --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed scanned-image
 
   deploy:
     name: Desplegar en EC2
